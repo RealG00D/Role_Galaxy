@@ -1,0 +1,22 @@
+---
+- hosts: localhost
+  remote_user: root
+  vars:
+    ajgarlag_apache2_vhost_default_http: yes
+    ajgarlag_apache2_vhost_default_https: no
+    ajgarlag_apache2_vhosts:
+      - hostname: example.com
+        documentroot: /var/www
+        serveralias: www.example.com
+        serveradmin: webmaster@example.com
+        ssl: yes
+        extras:
+          - CustomLog "|/usr/bin/logger -p local2.notice -t apache" combined
+      - hostname: example.org
+        documentroot: /var/www
+        serveralias: www.example.org
+        serveradmin: webmaster@example.org
+        extras:
+          - CustomLog "|/usr/bin/logger -p local2.notice -t apache" combined
+  roles:
+    - role: ajgarlag.apache2
